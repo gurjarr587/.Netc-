@@ -1,0 +1,168 @@
+﻿<!Doctype html>
+<html>
+<head>
+    <title>Page Title</title>
+    <style>
+        #dialog {
+            background-color: lightgray; /*Dialog box styling*/
+        }
+
+        #output {
+            display: inline;
+            background-color: lightgreen; /*all the buttons and textarea styling part */
+            border: solid;
+            color: white;
+            text-align: end;
+            position: relative;
+            right: 5px;
+            width: 270px;
+            height: 20px;
+            border: 3px solid #73AD21;
+            padding: 2px;
+        }
+        .calculate1,.calculate2,.calculate3,.calculate4  {
+            background-color: lightgray;
+            color: white;
+            text-align: left;
+            display: table-row;
+            font-size: 15px;
+            
+        }
+
+    </style>
+</head>
+
+
+<body>
+    <script src="Scripts/jquery-2.2.3.min.js"></script> 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var result = 0;              //initializing the values 
+            var prentry = 0;
+            var present = '0';
+            var operator = null;
+            //finalresult(result);
+
+            $("#dialog").dialog();                           //dialog box default 
+            $('.btn1').click(function (evt) {                //on click function intialized on clicking the button value
+                $('#output').val($(this).val());
+                var buttonvalue = $(this).val();
+                if (buttonvalue === "C") {
+                    result = 0;
+                    present = '0';
+
+                }
+                else if (isNum(buttonvalue)) {
+                    /*if (buttonvalue === '0') {
+                        present = buttonvalue;
+                        console.log(present);
+                    }
+                    else*/
+                    {
+                        present += buttonvalue;
+                        console.log(present);
+                    }
+                }
+
+                else if (isOperator(buttonvalue)) {
+                    prentry = parseFloat(present);
+                    operator = buttonvalue;
+                    console.log(operator);
+                    present = '';
+                    console.log(present);
+                }
+
+                else if (buttonvalue === '.') {
+                    present += buttonvalue
+                    
+                }
+                else if (buttonvalue === 'Sin') {
+                    present = Math.sin(present);
+                    console.log(present);
+                }
+                else if (buttonvalue === 'Cos') {
+                    present = Math.cos(present);
+                    console.log(present);
+                }
+                else if (buttonvalue === 'Tan') {
+
+                    present = Math.tan(present);
+                    console.log(present);
+                }
+                else if (buttonvalue === '=') {
+                    present = tocalculate(present, prentry, operator);
+                    operator = null;
+                }
+                finalresult(present);
+
+            });
+        });
+        isNum = function(value)
+        {
+            return !isNaN(value)
+        }
+
+        isOperator = function (value) {
+            return value === '+' || value === '-' || value === '*' ||  value === '/';
+        }
+
+        tocalculate = function (present, prentry, operator) {
+            b = parseFloat(present);
+            a = parseFloat(prentry);
+            if (operator === '+') return a + b;
+            if (operator === '-') {
+                if (a > b) {
+                    return (a - b);
+                }
+                else {
+                    return -(b-a);
+                }
+            }
+            
+            if (operator === '/') return a / b;
+            if (operator === '*') return a * b;
+        }
+        finalresult = function (present) {
+            $('#output').val(present);
+        }
+    </script>
+
+    <div id="dialog" title="Simple Calculator">
+        <input type="text" id="output" />
+        
+        <div class="calculate1">
+            <input type="button" name="zero" value="0" class="btn1" style="width:48px;height:40px"/>
+            <input type="button" name="one" value="1" class="btn1" style="width:48px;height:40px"/>
+            <input type="button" name="two" value="2" class="btn1" style="width:48px;height:40px"/>
+            <input type="button" name="plus" value="+" class="btn1" style="width:48px;height:40px;background-color:lightblue"/>
+            <input type="button" name="clear" value="C" class="btn1" style="width:48px;height:40px;background-color:red"/>
+        </div>
+        <div class="calculate2">
+            <input type="button" name="three" value="3" class="btn1" style="width:48px;height:40px"/>
+            <input type="button" name="one" value="4" class="btn1" style="width:48px;height:40px"/>
+            <input type="button" name="one" value="5" class="btn1" style="width:48px;height:40px"/>
+            <input type="button" name="one" value="-" class="btn1" style="width:48px;height:40px;background-color:lightgreen"/>
+            <input type="button" name="one" value="Sin" class="btn1" style="width:48px;height:40px;background-color:lightpink"/>
+        </div>
+        <div class="calculate3">
+            <input type="button" name="one" value="6" class="btn1" style="width:48px;height:40px"/>
+            <input type="button" name="one" value="7" class="btn1" style="width:48px;height:40px"/>
+            <input type="button" name="one" value="8" class="btn1" style="width:48px;height:40px"/>
+            <input type="button" name="one" value="*" class="btn1" style="width:48px;height:40px;background-color:orange"/>
+            <input type="button" name="one" value="Cos" class="btn1" style="width:48px;height:40px;background-color:darkgrey"/>
+        </div>
+        <div class="calculate4">
+            <input type="button" name="one" value="9" class="btn1" style="width:48px;height:40px"/>
+            <input type="button" name="one" value="." class="btn1" style="width:48px;height:40px;background-color:lightsalmon"/>
+            <input type="button" name="one" value="=" class="btn1" style="width:48px;height:40px;background-color:green"/>
+            <input type="button" name="one" value="/" class="btn1" style="width:48px;height:40px;background-color:sandybrown"/>
+            <input type="button" name="one" value="Tan" class="btn1" style="width:48px;height:40px;background-color:lightcoral"/>
+        </div>
+
+    </div>
+</body>
+</html>
